@@ -1,0 +1,283 @@
+\documentclass[10pt,a4paper,landscape]{article}
+\usepackage[margin=15mm,top=15mm,bottom=15mm]{geometry}
+\usepackage{fontspec,booktabs,array,tabularx,caption,fancyhdr,amsmath}
+\setmainfont{TeX Gyre Termes}
+\captionsetup[table]{font=small,labelfont=bf,labelsep=period,justification=raggedright,singlelinecheck=false,skip=7pt}
+\setlength{\parindent}{0pt}\setlength{\parskip}{5pt}
+\setlength{\tabcolsep}{5pt}\renewcommand{\arraystretch}{1.13}
+\pagestyle{fancy}\fancyhf{}\fancyhead[L]{\small FastForward: Experimental Results}\fancyhead[R]{\small Main Results and Supplementary Studies}\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\newcommand{\tnote}[1]{\par\vspace{3pt}{\footnotesize #1}\par}
+\begin{document}
+
+\begin{table}[!ht]\centering
+\caption{\textbf{Main results on Qwen3-VL.} Each entry reports accuracy (\%) followed by speedup ($\times$) in parentheses. Four model sizes, six benchmarks, and eight methods yield 192 cells.}
+\small
+\begin{tabular}{@{}llrrrrrrrr@{}}\toprule
+Model & Benchmark & Native & Ours & F3A & VisionZip & DivPrune & ReplaceMe & FastV & S2Prune\\\midrule
+2B & MMStar & 55.53 (1.00) & \textbf{52.33 (6.99)} & 29.53 (2.59) & 30.80 (6.26) & 30.73 (6.29) & 42.67 (7.03) & 27.73 (6.22) & 31.20 (5.37)\\
+2B & AI2D & 76.00 (1.00) & \textbf{74.19 (5.71)} & 59.39 (2.65) & 59.33 (5.27) & 59.13 (5.29) & 51.10 (5.71) & 58.91 (5.25) & 60.27 (4.72)\\
+2B & MMBench-EN & 77.47 (1.00) & \textbf{75.51 (6.31)} & 25.51 (2.22) & 26.79 (5.61) & 32.14 (5.62) & 16.58 (6.35) & 18.62 (5.56) & 32.82 (4.76)\\
+2B & CV-Bench & 79.50 (1.00) & \textbf{78.69 (7.34)} & 44.52 (3.55) & 42.96 (6.85) & 42.99 (6.88) & 64.16 (7.36) & 39.25 (6.82) & 46.04 (6.16)\\
+2B & VisualPuzzles & 31.25 (1.00) & \textbf{30.48 (5.80)} & 30.74 (2.66) & 28.68 (5.32) & 29.28 (5.34) & 25.34 (5.77) & 29.37 (5.29) & 30.05 (4.76)\\
+2B & VisuLogic & 26.40 (1.00) & \textbf{26.60 (4.83)} & 25.10 (2.12) & 23.80 (4.37) & 25.00 (4.38) & 23.50 (4.78) & 25.50 (4.34) & 24.00 (3.87)\\
+\midrule
+4B & MMStar & 62.53 (1.00) & \textbf{61.33 (6.19)} & 32.53 (2.72) & 33.53 (5.95) & 32.93 (5.91) & 58.53 (6.37) & 32.87 (5.89) & 32.40 (5.19)\\
+4B & AI2D & 82.29 (1.00) & \textbf{79.76 (5.41)} & 63.21 (2.79) & 62.63 (5.25) & 63.05 (5.22) & 79.44 (5.55) & 62.50 (5.21) & 64.15 (4.73)\\
+4B & MMBench-EN & 83.93 (1.00) & \textbf{82.14 (5.51)} & 38.18 (2.33) & 39.37 (5.29) & 43.71 (5.29) & 81.63 (5.75) & 36.65 (5.28) & 46.60 (4.58)\\
+4B & CV-Bench & 85.05 (1.00) & \textbf{83.13 (7.40)} & 48.86 (3.89) & 47.83 (7.19) & 48.97 (7.23) & 82.33 (7.65) & 50.23 (7.22) & 50.40 (6.50)\\
+4B & VisualPuzzles & 31.42 (1.00) & \textbf{32.45 (5.40)} & 31.25 (2.78) & 30.65 (5.23) & 31.51 (5.23) & 30.82 (5.53) & 30.22 (5.19) & 31.08 (4.71)\\
+4B & VisuLogic & 25.40 (1.00) & \textbf{27.60 (4.32)} & 24.80 (2.19) & 24.90 (4.18) & 25.10 (4.17) & 26.40 (4.42) & 25.60 (4.14) & 25.00 (3.76)\\
+\midrule
+8B & MMStar & 65.00 (1.00) & \textbf{62.73 (5.46)} & 32.00 (2.69) & 31.60 (5.37) & 32.40 (5.37) & 62.33 (5.59) & 30.73 (5.27) & 33.67 (4.82)\\
+8B & AI2D & 84.59 (1.00) & \textbf{82.32 (5.14)} & 64.93 (2.86) & 65.61 (5.04) & 65.09 (5.04) & 82.64 (5.23) & 64.73 (4.99) & 64.93 (4.62)\\
+8B & MMBench-EN & 84.86 (1.00) & \textbf{82.74 (4.59)} & 36.99 (2.22) & 35.12 (4.53) & 40.22 (4.51) & 83.16 (4.72) & 30.44 (4.46) & 45.24 (4.03)\\
+8B & CV-Bench & 86.00 (1.00) & \textbf{83.14 (7.27)} & 54.38 (4.11) & 54.21 (7.17) & 53.16 (7.20) & 83.22 (7.40) & 52.06 (7.13) & 58.44 (6.61)\\
+8B & VisualPuzzles & 34.33 (1.00) & \textbf{34.50 (5.06)} & 29.20 (2.81) & 28.68 (5.01) & 28.00 (5.00) & 34.42 (5.16) & 29.02 (4.95) & 28.25 (4.60)\\
+8B & VisuLogic & 25.40 (1.00) & \textbf{25.50 (3.79)} & 28.00 (2.09) & 26.10 (3.77) & 27.10 (3.76) & 26.10 (3.87) & 26.40 (3.71) & 28.80 (3.46)\\
+\midrule
+32B & MMStar & 73.13 (1.00) & \textbf{70.00 (4.27)} & 33.67 (3.14) & 68.27 (4.32) & 53.40 (4.40) & 68.20 (4.48) & 65.00 (4.29) & 48.20 (4.32)\\
+32B & AI2D & 88.15 (1.00) & \textbf{85.78 (4.75)} & 66.87 (3.57) & 85.14 (4.82) & 73.12 (4.86) & 85.82 (4.96) & 82.84 (4.79) & 67.39 (4.77)\\
+32B & MMBench-EN & 88.35 (1.00) & \textbf{88.01 (3.43)} & 43.28 (2.51) & 86.39 (3.47) & 81.55 (3.55) & 87.50 (3.60) & 86.31 (3.45) & 76.02 (3.47)\\
+32B & CV-Bench & 88.88 (1.00) & \textbf{85.84 (7.16)} & 53.83 (5.44) & 85.95 (7.28) & 75.42 (7.45) & 85.71 (7.48) & 84.80 (7.22) & 69.41 (7.19)\\
+32B & VisualPuzzles & 40.84 (1.00) & \textbf{38.18 (4.83)} & 32.53 (3.67) & 36.90 (4.83) & 31.51 (4.97) & 38.18 (5.04) & 33.73 (4.81) & 33.39 (4.88)\\
+32B & VisuLogic & 26.30 (1.00) & \textbf{28.40 (3.30)} & 23.60 (2.50) & 27.30 (3.28) & 26.30 (3.37) & 27.30 (3.45) & 27.10 (3.26) & 23.70 (3.33)\\
+\bottomrule\end{tabular}
+\tnote{Bold identifies Ours; it does not denote the best score. Native is the baseline for each model and benchmark. All cells cover the complete input set with three repetitions (1,322,016 calls in total). Speedup is native latency divided by method latency; it excludes loading, packing, and initial graph capture. MMBench-EN uses provided-pass group accuracy, not full official CircularEval; 53 groups are incomplete. CV-Bench uses source-balanced accuracy; the other benchmarks use forced-choice exact accuracy. Three repetitions are timing replicates, not independent training seeds.}
+\end{table}
+\clearpage
+\begin{table}[!ht]\centering
+\caption{\textbf{End-to-end steady-state latency on Qwen3-VL.} Values are in ms.}
+\small
+\begin{tabular}{@{}llrrrrrrrr@{}}\toprule
+Model & Benchmark & Native & Ours & F3A & VisionZip & DivPrune & ReplaceMe & FastV & S2Prune\\\midrule
+2B & MMStar & 43.074 & 6.161 & 16.607 & 6.876 & 6.853 & 6.125 & 6.927 & 8.018\\
+2B & AI2D & 51.414 & 9.006 & 19.366 & 9.752 & 9.715 & 8.998 & 9.801 & 10.898\\
+2B & MMBench-EN & 35.965 & 5.696 & 16.186 & 6.408 & 6.399 & 5.662 & 6.473 & 7.562\\
+2B & CV-Bench & 69.470 & 9.466 & 19.567 & 10.147 & 10.100 & 9.433 & 10.179 & 11.271\\
+2B & VisualPuzzles & 51.815 & 8.929 & 19.468 & 9.744 & 9.708 & 8.976 & 9.788 & 10.889\\
+2B & VisuLogic & 39.458 & 8.164 & 18.644 & 9.033 & 9.011 & 8.261 & 9.087 & 10.190\\
+\midrule
+4B & MMStar & 48.980 & 7.917 & 17.998 & 8.232 & 8.292 & 7.691 & 8.317 & 9.441\\
+4B & AI2D & 58.256 & 10.768 & 20.850 & 11.098 & 11.152 & 10.487 & 11.177 & 12.317\\
+4B & MMBench-EN & 41.143 & 7.465 & 17.657 & 7.780 & 7.781 & 7.154 & 7.798 & 8.975\\
+4B & CV-Bench & 82.260 & 11.114 & 21.121 & 11.434 & 11.379 & 10.752 & 11.394 & 12.651\\
+4B & VisualPuzzles & 58.482 & 10.832 & 21.019 & 11.190 & 11.190 & 10.582 & 11.266 & 12.405\\
+4B & VisuLogic & 45.110 & 10.443 & 20.596 & 10.801 & 10.816 & 10.205 & 10.899 & 11.999\\
+\midrule
+8B & MMStar & 53.471 & 9.788 & 19.842 & 9.950 & 9.964 & 9.557 & 10.138 & 11.103\\
+8B & AI2D & 64.474 & 12.552 & 22.573 & 12.801 & 12.802 & 12.336 & 12.914 & 13.959\\
+8B & MMBench-EN & 43.129 & 9.396 & 19.461 & 9.519 & 9.567 & 9.135 & 9.680 & 10.690\\
+8B & CV-Bench & 94.549 & 13.006 & 22.977 & 13.184 & 13.133 & 12.784 & 13.256 & 14.308\\
+8B & VisualPuzzles & 64.515 & 12.744 & 22.988 & 12.878 & 12.904 & 12.497 & 13.042 & 14.026\\
+8B & VisuLogic & 47.067 & 12.407 & 22.500 & 12.497 & 12.532 & 12.168 & 12.698 & 13.618\\
+\midrule
+32B & MMStar & 95.159 & 22.287 & 30.289 & 22.045 & 21.644 & 21.240 & 22.173 & 22.017\\
+32B & AI2D & 116.910 & 24.594 & 32.758 & 24.274 & 24.073 & 23.591 & 24.428 & 24.515\\
+32B & MMBench-EN & 75.616 & 22.075 & 30.069 & 21.786 & 21.323 & 21.021 & 21.923 & 21.766\\
+32B & CV-Bench & 180.651 & 25.216 & 33.179 & 24.830 & 24.252 & 24.151 & 25.004 & 25.108\\
+32B & VisualPuzzles & 122.820 & 25.446 & 33.452 & 25.407 & 24.716 & 24.371 & 25.518 & 25.154\\
+32B & VisuLogic & 83.441 & 25.256 & 33.321 & 25.439 & 24.750 & 24.184 & 25.571 & 25.048\\
+\bottomrule\end{tabular}
+\tnote{Timing includes image I/O, preprocessing, model execution, CPU output, and JSON serialization, averaged over repetitions 2 and 3. Methods execute sequentially on the same GPU and model process; Native is freshly loaded after the accelerated methods. MMBench-EN uses provided-pass group accuracy, not full official CircularEval; 53 groups are incomplete. CV-Bench uses source-balanced accuracy; the other benchmarks use forced-choice exact accuracy. Three repetitions are timing replicates, not independent training seeds.}
+\end{table}
+\clearpage
+\begin{table}[!ht]\centering
+\caption{\textbf{Accuracy loss relative to Native on Qwen3-VL.} Values are in percentage points.}
+\small
+\begin{tabular}{@{}llrrrrrrrr@{}}\toprule
+Model & Benchmark & Native & Ours & F3A & VisionZip & DivPrune & ReplaceMe & FastV & S2Prune\\\midrule
+2B & MMStar & 0.000 & 3.200 & 26.000 & 24.733 & 24.800 & 12.867 & 27.800 & 24.333\\
+2B & AI2D & 0.000 & 1.813 & 16.613 & 16.677 & 16.872 & 24.903 & 17.098 & 15.738\\
+2B & MMBench-EN & 0.000 & 1.956 & 51.956 & 50.680 & 45.323 & 60.884 & 58.844 & 44.643\\
+2B & CV-Bench & 0.000 & 0.807 & 34.980 & 36.539 & 36.515 & 15.341 & 40.256 & 33.465\\
+2B & VisualPuzzles & 0.000 & 0.771 & 0.514 & 2.568 & 1.969 & 5.908 & 1.884 & 1.199\\
+2B & VisuLogic & 0.000 & -0.200 & 1.300 & 2.600 & 1.400 & 2.900 & 0.900 & 2.400\\
+\midrule
+4B & MMStar & 0.000 & 1.200 & 30.000 & 29.000 & 29.600 & 4.000 & 29.667 & 30.133\\
+4B & AI2D & 0.000 & 2.526 & 19.074 & 19.657 & 19.236 & 2.850 & 19.786 & 18.135\\
+4B & MMBench-EN & 0.000 & 1.786 & 45.748 & 44.558 & 40.221 & 2.296 & 47.279 & 37.330\\
+4B & CV-Bench & 0.000 & 1.924 & 36.194 & 37.222 & 36.084 & 2.729 & 34.822 & 34.651\\
+4B & VisualPuzzles & 0.000 & -1.027 & 0.171 & 0.771 & -0.086 & 0.599 & 1.199 & 0.342\\
+4B & VisuLogic & 0.000 & -2.200 & 0.600 & 0.500 & 0.300 & -1.000 & -0.200 & 0.400\\
+\midrule
+8B & MMStar & 0.000 & 2.267 & 33.000 & 33.400 & 32.600 & 2.667 & 34.267 & 31.333\\
+8B & AI2D & 0.000 & 2.267 & 19.657 & 18.977 & 19.495 & 1.943 & 19.851 & 19.657\\
+8B & MMBench-EN & 0.000 & 2.126 & 47.874 & 49.745 & 44.643 & 1.701 & 54.422 & 39.626\\
+8B & CV-Bench & 0.000 & 2.859 & 31.621 & 31.784 & 32.836 & 2.780 & 33.935 & 27.555\\
+8B & VisualPuzzles & 0.000 & -0.171 & 5.137 & 5.651 & 6.336 & -0.086 & 5.308 & 6.079\\
+8B & VisuLogic & 0.000 & -0.100 & -2.600 & -0.700 & -1.700 & -0.700 & -1.000 & -3.400\\
+\midrule
+32B & MMStar & 0.000 & 3.133 & 39.467 & 4.867 & 19.733 & 4.933 & 8.133 & 24.933\\
+32B & AI2D & 0.000 & 2.364 & 21.276 & 3.012 & 15.026 & 2.332 & 5.311 & 20.758\\
+32B & MMBench-EN & 0.000 & 0.340 & 45.068 & 1.956 & 6.803 & 0.850 & 2.041 & 12.330\\
+32B & CV-Bench & 0.000 & 3.039 & 35.057 & 2.937 & 13.458 & 3.172 & 4.086 & 19.473\\
+32B & VisualPuzzles & 0.000 & 2.654 & 8.305 & 3.938 & 9.332 & 2.654 & 7.106 & 7.449\\
+32B & VisuLogic & 0.000 & -2.100 & 2.700 & -1.000 & 0.000 & -1.000 & -0.800 & 2.600\\
+\bottomrule\end{tabular}
+\tnote{Loss = Native accuracy $-$ method accuracy; negative values indicate an accuracy increase. Accuracy equality does not imply identical per-example predictions. MMBench-EN uses provided-pass group accuracy, not full official CircularEval; 53 groups are incomplete. CV-Bench uses source-balanced accuracy; the other benchmarks use forced-choice exact accuracy. Three repetitions are timing replicates, not independent training seeds.}
+\end{table}
+\begin{table}[!ht]\centering
+\caption{\textbf{Pooled Qwen3-VL speedups.} Ratios use sample-weighted latency over all six benchmarks.}
+\small
+\begin{tabular}{@{}lrrrrrrrr@{}}\toprule
+Model & Native & Ours & F3A & VisionZip & DivPrune & ReplaceMe & FastV & S2Prune\\\midrule
+2B & 1.000 & 6.291 & 2.672 & 5.741 & 5.760 & 6.301 & 5.707 & 5.053\\
+4B & 1.000 & 5.866 & 2.834 & 5.671 & 5.665 & 6.055 & 5.648 & 5.047\\
+8B & 1.000 & 5.378 & 2.851 & 5.301 & 5.296 & 5.493 & 5.238 & 4.819\\
+32B & 1.000 & 4.697 & 3.511 & 4.747 & 4.841 & 4.913 & 4.719 & 4.738\\
+\bottomrule\end{tabular}
+\tnote{These measurements belong to the main comparison cohort. Earlier standalone measurements are retained as historical results and are not substituted into this table.}
+\end{table}
+\clearpage
+\begin{table}[!ht]\centering
+\caption{\textbf{Frozen comparison budgets.} Calibration selects the available candidate closest to the latency of Ours using 32 image-disjoint GQA examples without labels.}
+\small
+\begin{tabular}{@{}lllrr@{}}\toprule
+Model & Method & Selected budget & Latency / Ours & Within $\pm10\%$\\\midrule
+2B & F3A & 2\% retained & 2.428 & No\\
+2B & VisionZip & 2\% retained & 1.082 & Yes\\
+2B & DivPrune & 2\% retained & 1.081 & Yes\\
+2B & ReplaceMe & 2 layers removed & 0.977 & Yes\\
+2B & FastV & 2\% retained & 1.091 & Yes\\
+2B & S2Prune & 2\% retained & 1.249 & No\\
+\midrule
+4B & F3A & 2\% retained & 2.202 & No\\
+4B & VisionZip & 2\% retained & 1.036 & Yes\\
+4B & DivPrune & 2\% retained & 1.038 & Yes\\
+4B & ReplaceMe & 2 layers removed & 0.976 & Yes\\
+4B & FastV & 5\% retained & 1.044 & Yes\\
+4B & S2Prune & 2\% retained & 1.182 & No\\
+\midrule
+8B & F3A & 2\% retained & 1.990 & No\\
+8B & VisionZip & 2\% retained & 1.023 & Yes\\
+8B & DivPrune & 2\% retained & 1.026 & Yes\\
+8B & ReplaceMe & 2 layers removed & 0.975 & Yes\\
+8B & FastV & 2\% retained & 1.036 & Yes\\
+8B & S2Prune & 2\% retained & 1.133 & No\\
+\midrule
+32B & F3A & 2\% retained & 1.362 & No\\
+32B & VisionZip & 70\% retained & 0.988 & Yes\\
+32B & DivPrune & 20\% retained & 0.983 & Yes\\
+32B & ReplaceMe & 4 layers removed & 0.954 & Yes\\
+32B & FastV & 70\% retained & 0.996 & Yes\\
+32B & S2Prune & 10\% retained & 1.000 & Yes\\
+\bottomrule\end{tabular}
+\tnote{All competitors are Qwen3-VL adaptations on a shared accelerated backend, not measurements of the authors\textquotesingle{} original end-to-end systems. Several 2B--8B settings retain only 2\% of visual tokens. F3A and some S2Prune settings remain unmatched; severe losses cannot establish that the original methods are intrinsically ineffective. Accelerated paths include frozen input/prompt approximations and FP8 (precise accumulation for 8B/32B); Native uses native inputs and BF16. These are not lossless, same-input kernel-only comparisons.}
+\end{table}
+\clearpage
+\begin{table}[!ht]\centering
+\caption{\textbf{Supplementary cross-family transfer and adaptation studies.} Qwen3-VL remains the main evaluation; other families provide supporting evidence.}
+\small
+\begin{tabular}{@{}llrrl@{}}\toprule
+Family & Model & Speedup ($\times$) & Maximum loss (pp) & Measurement scope\\\midrule
+Ministral3 & 3B & 3.2318 & 4.3104 & Request-stream speedup\\
+Ministral3 & 8B & 3.5799 & 4.1909 & Request-stream speedup\\
+Ministral3 & 14B & 3.7294 & 4.4483 & Request-stream speedup\\
+\midrule
+Gemma3 & 4B & 3.255639 & 0.000000 & B2 request-stream throughput\\
+Gemma3 & 12B & 2.555902 & 0.170068 & B2 request-stream throughput\\
+Gemma3 & 27B & 1.987976 & 0.000000 & B2 request-stream throughput\\
+\midrule
+InternVL3.5 & 8B & 1.64--1.82 & Approx. 4.34 & Per-benchmark warm latency\\
+LLaVA-1.5 & 7B & 3.38 & 0 on GQA64 & Pilot only; no six-benchmark run\\
+\bottomrule\end{tabular}
+\tnote{These studies are not controlled single-component ablations or a unified speed ranking. Ministral includes request-time capture; Gemma compares B2 throughput against serial HF; InternVL reuses a historical fixed-image baseline; Qwen excludes initial capture. Ratios must not be averaged across families. The 42 full-benchmark comparisons exclude the LLaVA pilot.}
+\end{table}
+\begin{table}[!ht]\centering
+\caption{\textbf{InternVL3.5-8B adaptation.} Accuracy is in percent; improvement is relative to the earlier transfer configuration.}
+\small
+\begin{tabular}{@{}lrrrrrrr@{}}\toprule
+Benchmark & Native & Earlier & Adapted & Improvement (pp) & Latency (ms) & Speedup ($\times$)\\\midrule
+MMStar & 64.27 & 48.33 & 59.93 & +11.60 & 20.71 & 1.80\\
+AI2D & 80.63 & 70.34 & 79.89 & +9.55 & 25.07 & 1.66\\
+MMBench-EN & 80.61 & 64.97 & 78.32 & +13.35 & 20.07 & 1.82\\
+CV-Bench & 81.11 & 69.04 & 80.03 & +10.98 & 25.39 & 1.66\\
+VisualPuzzles & 30.57 & 29.28 & 29.97 & +0.68 & 25.37 & 1.64\\
+VisuLogic & 29.50 & 23.80 & 27.30 & +3.50 & 21.83 & 1.73\\
+\bottomrule\end{tabular}
+\tnote{The adapted model uses 448-pixel inputs, 26/36 language layers, all vision layers, calibrated static quantization, and a rank-32 recovery module. Calibration, resolution, and teacher/retraining change jointly; retained layer indices are unchanged. Latency is compared with historical H100 fixed-448 single-image controls, not a contemporaneous paired rerun or default dynamic tiling.}
+\end{table}
+\clearpage
+\begin{table}[!ht]\centering
+\caption{\textbf{Ministral3 supplementary full-benchmark results.} Loss is baseline accuracy minus method accuracy (percentage points).}
+\small
+\begin{tabular}{@{}llrrrrrr@{}}\toprule
+Model & Benchmark & Baseline (\%) & Ours (\%) & Loss (pp) & Baseline (ms) & Ours (ms) & Speedup ($\times$)\\\midrule
+3B & MMStar & 49.067 & 47.200 & 1.867 & 73.698 & 23.742 & 3.104\\
+3B & AI2D & 76.004 & 73.867 & 2.137 & 90.422 & 27.867 & 3.245\\
+3B & MMBench-EN & 71.769 & 71.684 & 0.085 & 65.794 & 22.429 & 2.933\\
+3B & CV-Bench & 72.354 & 68.044 & 4.310 & 112.385 & 29.552 & 3.803\\
+3B & VisualPuzzles & 31.079 & 30.565 & 0.514 & 89.813 & 28.422 & 3.160\\
+3B & VisuLogic & 24.200 & 25.700 & -1.500 & 68.877 & 24.225 & 2.843\\
+\midrule
+8B & MMStar & 52.200 & 50.200 & 2.000 & 100.921 & 29.302 & 3.444\\
+8B & AI2D & 77.461 & 75.777 & 1.684 & 121.478 & 33.600 & 3.615\\
+8B & MMBench-EN & 75.595 & 74.150 & 1.446 & 90.951 & 28.308 & 3.213\\
+8B & CV-Bench & 74.869 & 70.678 & 4.191 & 151.967 & 35.613 & 4.267\\
+8B & VisualPuzzles & 29.794 & 29.538 & 0.257 & 121.053 & 34.504 & 3.508\\
+8B & VisuLogic & 23.800 & 25.700 & -1.900 & 94.430 & 30.270 & 3.120\\
+\midrule
+14B & MMStar & 55.467 & 54.000 & 1.467 & 123.660 & 35.138 & 3.519\\
+14B & AI2D & 78.595 & 77.137 & 1.457 & 148.597 & 39.230 & 3.788\\
+14B & MMBench-EN & 77.041 & 75.255 & 1.786 & 110.754 & 33.981 & 3.259\\
+14B & CV-Bench & 74.118 & 69.669 & 4.448 & 188.824 & 41.011 & 4.604\\
+14B & VisualPuzzles & 33.305 & 31.764 & 1.541 & 148.558 & 40.230 & 3.693\\
+14B & VisuLogic & 25.700 & 26.500 & -0.800 & 115.933 & 36.186 & 3.204\\
+\bottomrule\end{tabular}
+\tnote{The frozen configuration uses 336-pixel inputs, full prompts and all layers, derived mixed precision, QKV fusion, and vision graph execution. Request-stream timing includes initial capture and request-time compilation; model loading and weight preparation are separate. Each request recomputes visual features. This does not isolate same-precision operator gains. MMBench-EN uses provided-pass group accuracy, not full official CircularEval; 53 groups are incomplete. CV-Bench uses source-balanced accuracy; the other benchmarks use forced-choice exact accuracy. Three repetitions are timing replicates, not independent training seeds.}
+\end{table}
+\clearpage
+\begin{table}[!ht]\centering
+\caption{\textbf{Gemma3 supplementary full-benchmark results.} Loss is baseline accuracy minus method accuracy (percentage points).}
+\small
+\begin{tabular}{@{}llrrrr@{}}\toprule
+Model & Benchmark & Baseline (\%) & Ours (\%) & Loss (pp) & Throughput ($\times$)\\\midrule
+4B & MMStar & 46.000 & 46.000 & 0.000 & 3.086\\
+4B & AI2D & 70.499 & 70.499 & 0.000 & 3.410\\
+4B & MMBench-EN & 68.027 & 68.027 & 0.000 & 3.059\\
+4B & CV-Bench & 57.535 & 57.535 & 0.000 & 3.408\\
+4B & VisualPuzzles & 30.479 & 30.479 & 0.000 & 3.400\\
+4B & VisuLogic & 26.500 & 26.500 & 0.000 & 3.370\\
+\midrule
+12B & MMStar & 54.600 & 54.733 & -0.133 & 2.428\\
+12B & AI2D & 79.922 & 79.922 & 0.000 & 2.698\\
+12B & MMBench-EN & 76.105 & 75.935 & 0.170 & 2.373\\
+12B & CV-Bench & 68.959 & 68.959 & 0.000 & 2.724\\
+12B & VisualPuzzles & 28.682 & 28.682 & 0.000 & 2.673\\
+12B & VisuLogic & 25.400 & 25.500 & -0.100 & 2.601\\
+\midrule
+27B & MMStar & 56.867 & 56.867 & 0.000 & 1.885\\
+27B & AI2D & 81.218 & 81.250 & -0.032 & 2.095\\
+27B & MMBench-EN & 80.952 & 80.952 & 0.000 & 1.857\\
+27B & CV-Bench & 71.434 & 71.434 & 0.000 & 2.127\\
+27B & VisualPuzzles & 33.904 & 33.904 & 0.000 & 2.050\\
+27B & VisuLogic & 24.900 & 24.900 & 0.000 & 2.007\\
+\bottomrule\end{tabular}
+\tnote{Inputs remain at 896 pixels with BF16 and all layers. The method combines B2 graph execution, CPU input pipelining, and normalization-related fusion against a serial HF baseline. Ratios describe request-stream throughput, not single-request latency or matched-batch kernel gains. Only the complete 27B rerun is used; the earlier OOM cell is invalid. Equal accuracy does not mean identical predictions. MMBench-EN uses provided-pass group accuracy, not full official CircularEval; 53 groups are incomplete. CV-Bench uses source-balanced accuracy; the other benchmarks use forced-choice exact accuracy. Three repetitions are timing replicates, not independent training seeds.}
+\end{table}
+\clearpage
+\begin{table}[!ht]\centering
+\caption{\textbf{Bounded Ministral3-8B pilot studies and failure cases.} Passes denote redundant precapture forward passes removed by the revised implementation.}
+\small
+\begin{tabular}{@{}llrrl@{}}\toprule
+Configuration & Evaluation set & Speedup ($\times$) & Loss (pp) & Outcome\\\midrule
+Mixed precision, 336 & Independent set A (64) & 3.087 & 3.125 & Earlier confirmation\\
+Mixed precision, 280 & Reused screening set (64) & 3.288 & 3.125 & Screening only\\
+Mixed precision, 224 & Numeric fixture (32) & -- & -- & Invalid: agreement below 95\%\\
+Mixed precision, 280 & Independent numeric set (32) & -- & -- & Invalid: agreement below 95\%\\
+Original precision, 224; 3 passes & Reused screening set (64) & 1.996 & 4.6875 & Capture overhead\\
+Original precision, 280; 3 passes & Reused screening set (64) & 2.396 & 0 & Capture overhead\\
+Original precision, 224; 0 passes & Reused screening set (64) & 2.952 & 4.6875 & Execution gates passed\\
+Original precision, 280; 0 passes & Reused screening set (64) & 2.963 & 0 & Selected before confirmation\\
+Original precision, 280; 0 passes & Independent set C (64) & 2.952 & 4.6875 & Confirmed; earlier setup retained\\
+\bottomrule\end{tabular}
+\tnote{Invalid candidates have no reported speed. These pilot studies do not replace the frozen full-benchmark configuration. Independent confirmation sets differ, so their score differences do not establish statistical superiority. One error on 64 examples corresponds to 1.5625 percentage points.}
+\end{table}
+\vspace{8pt}
+{\bfseries Reporting scope and reproducibility.}\par
+All tables are generated from archived result summaries. The Qwen main cohort is kept separate from earlier standalone measurements and delivered plugin versions. Other families are supplementary transfer/adaptation studies; joint changes do not identify individual component effects. Historical reports, including invalid or superseded runs, are retained for traceability rather than counted as additional accepted results. No new GPU measurements were performed for this formatting revision. Per-table precision follows the available source records; missing latencies are not reconstructed from rounded ratios.
+\par
+The accompanying source manifest records the input hashes. The underlying model weights, checkpoints, and per-example predictions remain in their existing execution storage. This document reports scoped forced-choice visual question answering results, not unrestricted text-generation performance or a universally interchangeable plugin.
+
+\end{document}

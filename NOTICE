@@ -1,0 +1,7 @@
+FastForward
+Copyright 2026 FastForward contributors.
+
+Released project code is provided under Apache-2.0.
+Model weights, datasets and external calibration/checkpoint artifacts are not included and retain their own licenses.
+The implementation uses PyTorch, Transformers, Triton and other dependencies listed in pyproject.toml; their licenses remain applicable.
+The names of comparison methods identify adapted experimental baselines. Their source code is not redistributed in this release.
