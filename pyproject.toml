@@ -3,17 +3,17 @@ requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "shunong-accel"
+name = "fastforward-accel"
 version = "0.2.4.post1"
 description = "FastForward: model-specific accelerated visual choice inference"
 requires-python = ">=3.10"
 dependencies = ["torch>=2.5", "torchvision", "transformers>=4.57", "numpy", "Pillow", "opencv-python", "peft", "safetensors", "accelerate", "triton", "imagecodecs", "pyspng"]
 
 [project.scripts]
-shunong-accel = "shunong_accel.cli:main"
+fastforward-accel = "fastforward_accel.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
 
 [tool.setuptools.package-data]
-shunong_accel = ["*.json", "_legacy/*.c"]
+fastforward_accel = ["*.json", "_legacy/*.c"]

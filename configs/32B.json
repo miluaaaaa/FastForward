@@ -1,5 +1,5 @@
 {
-  "workstream": "shunongLLM-A71C",
+  "workstream": "FastForward",
   "architecture": "qwen3_vl_family",
   "model": "/path/to/assets/Qwen3-VL-32B-Instruct",
   "expected_dimensions": [
@@ -175,5 +175,5 @@
   "execution_mode": "precise",
   "profile_path": "/path/to/assets/profiles.json",
   "profile_sha256": "2925bf6da08417a64a214b1825f3db7053d03a83130ec88e8ebb3cbcaeee0c29",
-  "api": "shunong_accel.Accelerator"
+  "api": "fastforward_accel.Accelerator"
 }

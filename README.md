@@ -43,14 +43,14 @@ Edit a template in `configs/` to set `model`, `checkpoint` and `profile_path` to
 Inside a suitable GPU allocation:
 
 ```python
-from shunong_accel import Accelerator
+from fastforward_accel import Accelerator
 
 engine = Accelerator("configs/4B.json", backend="fast")
 result = engine.predict("image.png", "Which object is larger?", ["The cup", "The plate"])
 print(result["answer"])
 ```
 
-Or use `shunong-accel --help` for the command-line interface. Fast mode releases BF16 projection weights: create a separate native instance for a later native comparison. Initial capture occurs on first use. The runtime serializes requests and does not implement a general multi-user server.
+Or use `fastforward-accel --help` for the command-line interface. Fast mode releases BF16 projection weights: create a separate native instance for a later native comparison. Initial capture occurs on first use. The runtime serializes requests and does not implement a general multi-user server.
 
 The namespaced `_legacy` modules are retained implementation dependencies, not a promise that every historical experimental script is a supported interface. Some historical loader/evidence helpers assume Slurm and H100. Scheduler-specific automation is not distributed as a required launcher.
 

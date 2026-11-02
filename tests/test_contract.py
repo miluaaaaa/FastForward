@@ -1,7 +1,7 @@
 import csv, math, unittest
 from pathlib import Path
 from tempfile import TemporaryDirectory
-from shunong_accel.api import response, validate_request
+from fastforward_accel.api import response, validate_request
 
 class Contracts(unittest.TestCase):
  def test_request(self):
